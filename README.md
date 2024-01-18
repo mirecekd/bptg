@@ -9,7 +9,7 @@ Tested on Python 3.11
 clone this repo and build container
 ```
 git clone https://github.com/mirecekd/bptg
-cd xmtg
+cd bptg
 docker build -t mirecekd/bptg .
 ```
 
@@ -18,7 +18,7 @@ docker build -t mirecekd/bptg .
 
 
 ```
-docker run --name=xmtg \
+docker run --name=bptg \
   -e "MQTT_BROKER=127.0.0.1" \
   -e "MQTT_PORT=1883" \
   -e "MQTT_USER=bptg" \
