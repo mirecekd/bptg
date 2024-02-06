@@ -47,31 +47,32 @@ def on_message(client, userdata, msg):
     values = {
         'Systolic': None,
         'Diastolic': None,
+        'Pulse': None,
         'timestamp': None
     }
 
     print("MQTT payload decoded")
+    if 'unavailable' not in (data["Systolic"], data["Diastolic"], data["Pulse"]):
 
-    values['timestamp'] = data['TimeStamp']
-    values['systolic'] = float(data["Systolic"])
-    values['diastolic'] = float(data["Diastolic"])    
-    values['pulse'] = float(data["Pulse"])    
+        values['timestamp'] = data['TimeStamp']
+        values['systolic'] = float(data["Systolic"])
+        values['diastolic'] = float(data["Diastolic"])    
+        values['pulse'] = float(data["Pulse"])    
 
-    print(values)
+        print(values)
 
-    garmin = Garmin(garmin_user, garmin_pass)
-    garmin.login()
-    garmin.set_blood_pressure(
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
-        systolic=values['systolic'],
-        diastolic=values['diastolic'],
-        pulse=values['pulse']
-    )
-
-    print('Blood pressure data uploaded to Garmin Connect')
-
-    previous_data = data
-
+        garmin = Garmin(garmin_user, garmin_pass)
+        garmin.login()
+        garmin.set_blood_pressure(
+            timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S'),
+            systolic=values['systolic'],
+            diastolic=values['diastolic'],
+            pulse=values['pulse']
+        )
+        print('Blood pressure data uploaded to Garmin Connect')
+        previous_data = data
+    else:
+        print('Skipping upload: some values are unavailable')
 
 client = mqtt.Client(username)
 client.username_pw_set(username, password)
