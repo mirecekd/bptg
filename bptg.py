@@ -73,8 +73,9 @@ def on_message(client, userdata, msg):
         previous_data = data
     else:
         print('Skipping upload: some values are unavailable')
-
-client = mqtt.Client(username)
+        
+client = mqtt.Client(client_id=username, callback_api_version=mqtt.CallbackAPIVersion.VERSION1)
+#client = mqtt.Client(username)
 client.username_pw_set(username, password)
 client.connect(broker, port, timelive)
 client.on_connect = on_connect
