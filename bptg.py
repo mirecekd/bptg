@@ -113,9 +113,10 @@ def on_message(client, userdata, msg):
         return
 
     try:
-        systolic = float(data["Systolic"])
-        diastolic = float(data["Diastolic"])
-        pulse = float(data["Pulse"])
+        # garminconnect requires int values
+        systolic = int(round(float(data["Systolic"])))
+        diastolic = int(round(float(data["Diastolic"])))
+        pulse = int(round(float(data["Pulse"])))
     except (KeyError, TypeError, ValueError) as exc:
         log.error("Cannot parse measurement values: %s", exc)
         return
